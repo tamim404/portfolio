@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamim Hosen | Cyber Security Analyst</title>
+  <meta name="description" content="Portfolio of Tamim Hosen, a Cyber Security Analyst specializing in SOC, Threat Hunting, and Purple Teaming.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       THEME CONFIGURATION
+       ========================================================= */
+    :root {
+      /* Base Colors */
+      --bg-void: #02040a;
+      --bg-elevated: #0d111c;
+      --bg-card: rgba(13, 17, 28, 0.7);
+      
+      /* Accents */
+      --accent-primary: #00ff9d; /* High-vis neon green */
+      --accent-secondary: #0ea5e9; /* Electric blue */
+      --accent-glow: rgba(0, 255, 157, 0.15);
+      
+      /* Borders & UI */
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(0, 255, 157, 0.5);
+      
+      /* Text */
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dark: #0f172a;
+
+      /* Typography */
+      --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+      /* Effects */
+      --glass-blur: blur(16px);
+      --radius-lg: 16px;
+      --radius-md: 8px;
+      --radius-pill: 999px;
+      
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* =========================================================
+       RESET & BASE
+       ========================================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default; /* Fallback */
+    }
+
+    ::selection { background: var(--accent-primary); color: var(--bg-void); }
+
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    ul { list-style: none; }
+    button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+    /* Layout Wrapper */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Background Elements */
+    #matrix-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+
+    /* =========================================================
+       UTILITIES & ANIMATIONS
+       ========================================================= */
+    .section {
+      padding: 6rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .section.visible { opacity: 1; transform: translateY(0); }
+
+    .kicker {
+      font-family: var(--font-mono);
+      color: var(--accent-primary);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    h2.section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glitch Effect */
+    .glitch-wrapper { position: relative; display: inline-block; }
+    .glitch { position: relative; color: var(--text-main); }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--bg-void);
+    }
+    .glitch::before {
+      left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      left: -2px; text-shadow: -1px 0 #00fff9; clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(12px, 9999px, 5px, 0); }
+      5% { clip: rect(85px, 9999px, 100px, 0); }
+      10% { clip: rect(0, 0, 0, 0); }
+      100% { clip: rect(0, 0, 0, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 100px, 0); }
+      5% { clip: rect(10px, 9999px, 45px, 0); }
+      10% { clip: rect(0, 0, 0, 0); }
+      100% { clip: rect(0, 0, 0, 0); }
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      background: rgba(2, 4, 10, 0.8);
+      backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-logo {
+      width: 36px; height: 36px;
+      background: rgba(0, 255, 157, 0.1);
+      border: 1px solid var(--accent-primary);
+      color: var(--accent-primary);
+      display: grid; place-items: center;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .nav-link:hover, .nav-link.active { color: var(--text-main); }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent-primary);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--accent-primary);
+    }
+    
+    .nav-link.active::after { width: 100%; }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      transition: var(--transition);
+    }
+
+    .status-badge:hover {
+      border-color: var(--accent-primary);
+      background: rgba(0, 255, 157, 0.05);
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-primary);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle { display: none; color: var(--text-main); font-size: 1.5rem; }
+
+    /* =========================================================
+       HERO SECTION
+       ========================================================= */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      font-weight: 800;
+      margin: 1rem 0;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-highlight { color: var(--accent-primary); }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--bg-void);
+      box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-main);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Terminal Window */
+    .terminal {
+      background: #0d1117;
+      border-radius: var(--radius-lg);
+      border: 1px solid #30363d;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      position: relative;
+    }
+
+    .terminal-bar {
+      background: #161b22;
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid #30363d;
+    }
+
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .t-red { background: #ff5f56; }
+    .t-yellow { background: #ffbd2e; }
+    .t-green { background: #27c93f; }
+
+    .terminal-content {
+      padding: 1.5rem;
+      min-height: 220px;
+      color: #c9d1d9;
+    }
+
+    .cmd-line { margin-bottom: 0.5rem; display: flex; }
+    .cmd-prompt { color: var(--accent-primary); margin-right: 0.5rem; }
+    .cmd-text { color: var(--text-main); }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 16px;
+      background: var(--text-muted);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* =========================================================
+       CARDS & GRIDS
+       ========================================================= */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      border-color: var(--border-active);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+    }
+    
+    /* Scanline effect on hover */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+    
+    .card:hover::before { opacity: 0.3; }
+
+    /* Skills */
+    .skill-cat { margin-bottom: 0.5rem; color: var(--accent-secondary); font-size: 0.8rem; font-family: var(--font-mono); text-transform: uppercase; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .chip {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      transition: var(--transition);
+    }
+    .chip:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background: rgba(0, 255, 157, 0.05);
+    }
+
+    /* Projects */
+    .project-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+    .folder-icon { font-size: 1.5rem; color: var(--accent-primary); }
+    .ext-link { color: var(--text-muted); transition: color 0.2s; }
+    .ext-link:hover { color: var(--text-main); }
+    
+    .project-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .project-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    /* Timeline */
+    .timeline { position: relative; border-left: 2px solid rgba(255,255,255,0.1); margin-left: 1rem; padding-left: 2rem; }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    
+    .timeline-dot {
+      position: absolute; left: -2.35rem; top: 0.25rem;
+      width: 12px; height: 12px;
+      background: var(--bg-void);
+      border: 2px solid var(--accent-secondary);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px var(--bg-void);
+    }
+    
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-secondary);
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    /* Forms */
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-muted); }
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.8rem;
+      color: var(--text-main);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.1);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 2rem 0;
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .hero-left { order: 1; }
+      .hero-right { order: -1; display: flex; justify-content: center; }
+      .terminal { width: 100%; max-width: 500px; text-align: left; }
+      .btn-group { justify-content: center; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .nav-menu { display: none; }
+      .menu-toggle { display: block; }
+      .status-badge { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .section-title { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix-canvas"></canvas>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand">
+        <div class="brand-logo">TH</div>
+        <span>Tamim Hosen</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+      </nav>
+
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Open for Opportunities</span>
+      </div>
+
+      <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="home" class="hero container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="kicker">Security Operations • Purple Teaming</div>
+          <h1 class="glitch-wrapper">
+            <span class="glitch" data-text="Defending the">Defending the</span> <br />
+            <span class="hero-highlight">Digital Frontier</span>
+          </h1>
+          <p class="hero-subtitle">
+            Cyber Security Analyst focused on SOC operations, VAPT, threat hunting, and building resilient detection capabilities. I turn noisy data into actionable intelligence.
+          </p>
+          <div class="btn-group">
+           
+            <a href="https://www.linkedin.com/in/tamim-hosen/" target="_blank" class="btn btn-primary">
+              <span>Connect on LinkedIn</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+             <a href="Tamim Hosen Resume.pdf" download class="btn btn-secondary">
+              <span>Download CV</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="terminal">
+            <div class="terminal-bar">
+              <div class="t-dot t-red"></div>
+              <div class="t-dot t-yellow"></div>
+              <div class="t-dot t-green"></div>
+            </div>
+            <div class="terminal-content" id="terminal-text">
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section container">
+      <div class="kicker">About Me</div>
+      <h2 class="section-title">The Analyst Behind the Screen</h2>
+      <div class="grid-2" style="margin-top: 2rem;">
+        <div class="card">
+          <p style="margin-bottom: 1rem; color: var(--text-muted);">
+            I am a SOC Analyst specializing in threat detection, incident response, and security monitoring. I investigate security incidents, identify attack vectors, and deliver actionable intelligence to reduce dwell time and strengthen defenses.
+          </p>
+          <p style="color: var(--text-muted);">
+            My approach bridges offensive and defensive security combining threat hunting, root cause analysis, and red teaming techniques to proactively identify vulnerabilities and enhance detection capabilities. With expertise in network administration and ethical hacking, I leverage attacker perspectives to optimize SOC efficiency and improve incident response.
+          </p>
+          
+        </div>
+        <div class="card">
+          <ul style="display: grid; gap: 1rem;">
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-muted);">Location</span>
+              <span>Dhaka, Bangladesh</span>
+            </li>
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-muted);">Degree</span>
+              <span>BSc in CSE, Gono Bishwabidyalay</span>
+            </li>
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem;">
+              <span style="color: var(--text-muted);">Focus</span>
+              <span style="color: var(--accent-primary);">SOC / Purple Team</span>
+            </li>
+            <li style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Email</span>
+              <span>tamim.net10@gmail.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section container">
+      <div class="kicker">Capabilities</div>
+      <h2 class="section-title">Technical Arsenal</h2>
+      <div class="grid-3" style="margin-top: 2rem;">
+        
+        <div class="card">
+          <div class="skill-cat">Blue Team & SOC</div>
+          <h3 style="margin-bottom: 0.5rem;">Defense & Response</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Core competency in monitoring, triaging, and investigating security incidents.</p>
+          <div class="skill-list">
+            <span class="chip">Stellar Cyber/Splunk/Wazuh</span>
+            <span class="chip">Log Analysis</span>
+            <span class="chip">Threat Hunting</span>
+            <span class="chip">Incident Response</span>
+            <span class="chip">Sigma Rules</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="skill-cat">Red Team & Offensive</div>
+          <h3 style="margin-bottom: 0.5rem;">Adversary Emulation</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Understanding attack vectors to validate security controls.</p>
+          <div class="skill-list">
+            <span class="chip">Reconnaissance</span>
+            <span class="chip">Web App Testing</span>
+            <span class="chip">Burp Suite</span>
+            <span class="chip">Metasploit</span>
+            <span class="chip">Phishing Sims</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="skill-cat">Tools & Scripting</div>
+          <h3 style="margin-bottom: 0.5rem;">Engineering</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Automating workflows and building custom security tools.</p>
+          <div class="skill-list">
+            <span class="chip">Python</span>
+            <span class="chip">Bash</span>
+            <span class="chip">Wireshark</span>
+            <span class="chip">Nmap</span>
+            <span class="chip">Linux/Windows</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <section id="experience" class="section container">
+      <div class="grid-2">
+        <div>
+          <div class="kicker">Timeline</div>
+          <h2 class="section-title" style="margin-bottom: 2rem;">Experience</h2>
+          <div class="timeline">
+            
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-date">2023 - Present</span>
+              <h3 style="font-size: 1.1rem; color: var(--text-main);">Security Analyst · SOC</h3>
+              <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Felicity IDC Limited</div>
+              <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 1rem; list-style: disc;">
+                <li>Monitor, detect, and respond to security incidents in real-time.</li>
+                <li>Safeguard client systems/data using advanced cybersecurity tools.</li>
+                <li>Report to AGM to drive SOC operational excellence.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-date">AUG 2024 - NOV 2024</span>
+              <h3 style="font-size: 1.1rem; color: var(--text-main);">Cyber Security Intern</h3>
+              <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Decodes Lab LTD.</div>
+              <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 1rem; list-style: disc;">
+                <li>Conducted network security examinations and risk assessments.</li>
+                <li>Performed vulnerability scanning and reporting on loopholes.</li>
+                <li>Collaborated on security policies and documentation.</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-date">MAR 2023 - SEP 2023</span>
+              <h3 style="font-size: 1.1rem; color: var(--text-main);">ICT Coordinator</h3>
+              <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">ICT Ministry of Bangladesh - Kaliakair</div>
+              <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 1rem; list-style: disc;">
+                <li>Managed ICT infrastructure and ensured system reliability.</li>
+                <li>Provided technical support and troubleshooting for departments.</li>
+                <li>Conducted ICT training to upskill government staff.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <div>
+          <div class="kicker">Credentials</div>
+          <h2 class="section-title" style="margin-bottom: 2rem;">Certifications</h2>
+          <div style="display: grid; gap: 1rem;">
+            
+            
+            <div class="card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="font-weight: 600; color: var(--accent-secondary);">eJPT</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">2026</span>
+              </div>
+              <div style="font-size: 0.9rem;">Junior Penetration Tester</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">INE Security</div>
+            </div>
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="font-weight: 600; color: #d63e3e;">CCEP</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">2025</span>
+              </div>
+              <div style="font-size: 0.9rem;">Certified Cybersecurity Educator Professional</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Red Team Leaders</div>
+            </div>
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="font-weight: 600; color: #f59e0b;">SCEAC</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">2025</span>
+              </div>
+              <div style="font-size: 0.9rem;">Stellar Cyber Essentials Associate certification.</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Stellar Cyber</div>
+            </div>
+
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="font-weight: 600; color: var(--accent-primary);">CRTOM</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">2025</span>
+              </div>
+              <div style="font-size: 0.9rem;">Certified Red Team Operation Management</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Red Team Leaders</div>
+            </div>
+
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <span style="font-weight: 600; color: #49eaff;">CEH</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">2024</span>
+              </div>
+              <div style="font-size: 0.9rem;">Certified Ethical Hacker</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Decodes Lab Ltd.</div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section container">
+      <div class="kicker">Portfolio</div>
+      <h2 class="section-title">Selected Projects</h2>
+      <div class="grid-2" style="margin-top: 2rem;">
+
+        <div class="card">
+          <div class="project-header">
+            <div class="folder-icon">📂</div>
+            <a href="https://github.com/tamim404" target="_blank" class="ext-link">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
+            </a>
+          </div>
+          <h3 class="project-title">SOC Correlation Dashboard</h3>
+          <p class="project-desc">Designed a Splunk‑based dashboard aggregating security events. Introduced risk‑based alerting that reduced false positives by 40%.</p>
+          <div class="skill-list">
+            <span class="chip">Splunk</span>
+            <span class="chip">SIEM Visualization</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="project-header">
+            <div class="folder-icon">📂</div>
+            <a href="https://github.com/tamim404" target="_blank" class="ext-link">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
+            </a>
+          </div>
+          <h3 class="project-title">Breach Email Detector</h3>
+          <p class="project-desc">Developed automated bulk email breach detection tool processing 5000+ emails per scan with threat intelligence correlation​.</p>
+          <div class="skill-list">
+            <span class="chip">Python</span>
+            <span class="chip">Automation</span>
+            <span class="chip">LeakCheckAPI</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="project-header">
+            <div class="folder-icon">📂</div>
+            <a href="https://github.com/tamim404" target="_blank" class="ext-link">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
+            </a>
+          </div>
+          <h3 class="project-title">Phishing Awareness Portal</h3>
+          <p class="project-desc"> A hacker-themed responsive web app to educate users on phishing attacks. Includes a phishing quiz, scam URL checker, and email legitimacy validator.</p>
+          <div class="skill-list">
+            <span class="chip">HTML5</span>
+            <span class="chip">Tailwind CSS</span>
+            <span class="chip">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="project-header">
+            <div class="folder-icon">📂</div>
+            <a href="https://github.com/tamim404" target="_blank" class="ext-link">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
+            </a>
+          </div>
+          <h3 class="project-title">OSINT Threat Profiler</h3>
+          <p class="project-desc">Framework aggregating OSINT sources to track suspicious infrastructure. Supports proactive hunting and incident response enrichment.</p>
+          <div class="skill-list">
+            <span class="chip">Python</span>
+            <span class="chip">OSINT APIs</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="section container" style="max-width: 900px;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="kicker">Get In Touch</div>
+        <h2 class="section-title">Initialize Handshake</h2>
+        <p style="color: var(--text-muted); margin-top: 1rem;">
+          Open to threat hunting strategies, purple team engagements, or security collaborations.
+        </p>
+      </div>
+
+    <div class="card">
+  <div class="contact-responsive-wrapper" style="gap: 3rem; align-items: center;">
+    
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+      
+      <div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Email</div>
+            <a href="mailto:tamim.net10@gmail.com" style="font-weight: 500;">tamim.net10@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Phone</div>
+            <div style="font-weight: 500;">+88 01729-479026</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Location</div>
+            <div style="font-weight: 500;">Dhaka, Bangladesh</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center;">
+        <a href="https://www.linkedin.com/in/tamim-hosen/" target="_blank" class="btn btn-primary" style="justify-content: center;">
+          LinkedIn Profile
+        </a>
+        <a href="https://github.com/tamim404" target="_blank" class="btn btn-secondary" style="justify-content: center;">
+          GitHub Profile
+        </a>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; position: relative;">
+      <div class="profile-glow" style="position: relative;">
+        <img src="Tamim-img.png" alt="Tamim Hosen" style="
+          width: 250px; 
+          height: 250px; 
+          object-fit: cover; 
+          border-radius: 50%; 
+          border: 2px solid var(--accent-primary);
+          box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+          background-color: var(--bg-elevated);
+        ">
+        
+        <div style="
+          position: absolute; 
+          bottom: 15px; 
+          right: 15px; 
+          width: 20px; 
+          height: 20px; 
+          background: var(--accent-primary); 
+          border: 3px solid var(--bg-card); 
+          border-radius: 50%;
+        "></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .contact-responsive-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* PC: Side by Side */
+  }
+
+  @media (max-width: 960px) {
+    .contact-responsive-wrapper {
+      display: flex;
+      flex-direction: column-reverse; /* Mobile: Reverses order so Image goes to Top */
+    }
+  }
+</style>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tamim Hosen. Built with &lt;code/&gt; and caffeine.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================
+       Matrix Rain Effect
+       ========================= */
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = "010101010100110101XYK";
+    const fontSize = 14;
+    let columns = Math.floor(width / fontSize);
+    let drops = [];
+
+    // Initialize drops
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * -100; // Start at random heights above canvas
+    }
+
+    function drawMatrix() {
+      // Semi-transparent black to create fade effect
+      ctx.fillStyle = "rgba(2, 4, 10, 0.05)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = "#00ff9d"; // Neon green text
+      ctx.font = fontSize + "px 'JetBrains Mono'";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+      requestAnimationFrame(drawMatrix);
+    }
+    drawMatrix();
+
+    /* =========================
+       Terminal Typing Animation
+       ========================= */
+    const terminalText = document.getElementById('terminal-text');
+const commands = [
+      { text: "user@th-soc:~$ ./init_sequence.sh", type: "cmd" },
+      { text: "[*] Establishing secure connection...", type: "output", delay: 150 },
+      { text: "[*] Loading modules: SOC_MONITOR, THREAT_HUNT", type: "output", delay: 300 },
+      { text: "[+] Connection established.", type: "success", delay: 600 },
+      { text: "user@th-soc:~$ whoami", type: "cmd", delay: 900 },
+      { text: "Tamim Hosen | Cyber Security Analyst", type: "output", delay: 1400 },
+      { text: "user@th-soc:~$ cat status.txt", type: "cmd", delay: 1800 },
+      { text: "Status: OPEN_TO_WORK", type: "success", delay: 2100 },
+      { text: "user@th-soc:~$ ", type: "cmd", delay: 2400 }
+    ];
+
+    async function typeWriter() {
+      terminalText.innerHTML = "";
+      
+      for (const cmd of commands) {
+        if (cmd.delay) await new Promise(r => setTimeout(r, cmd.delay));
+        
+        const line = document.createElement('div');
+        line.className = "cmd-line";
+        
+        if (cmd.type === "cmd") {
+          line.innerHTML = `<span class="cmd-prompt">➜</span> <span class="cmd-text"></span>`;
+          terminalText.appendChild(line);
+          const textSpan = line.querySelector('.cmd-text');
+          
+          // Type characters one by one
+          for (let char of cmd.text) {
+             textSpan.textContent += char;
+             await new Promise(r => setTimeout(r, 40));
+          }
+        } else {
+          // Output lines appear instantly or fade in
+          line.style.color = cmd.type === "success" ? "#00ff9d" : "#c9d1d9";
+          line.textContent = cmd.text;
+          terminalText.appendChild(line);
+        }
+        
+        // Auto scroll to bottom
+        terminalText.scrollTop = terminalText.scrollHeight;
+      }
+      
+      // Add cursor at the end
+      const cursorLine = document.createElement('div');
+      cursorLine.innerHTML = `<span class="cmd-prompt">➜</span> <span class="cursor"></span>`;
+      terminalText.appendChild(cursorLine);
+    }
+    
+    // Start typing when page loads
+    window.addEventListener('load', typeWriter);
+
+    /* =========================
+       Scroll Animations
+       ========================= */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+
+    /* =========================
+       Form Handling (Demo)
+       ========================= */
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const feedback = document.getElementById('form-feedback');
+      feedback.style.display = 'block';
+      feedback.style.color = '#00ff9d';
+      feedback.textContent = 'Transmission received. I will respond shortly.';
+      this.reset();
+    });
+
+    
+  </script>
+</body>
+</html>
